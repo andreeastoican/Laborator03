@@ -121,16 +121,23 @@
 		    />
 		
 		<ImageButton 
+		    android:id="@+id/img_add"
+		    android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/add"
+			android:layout_toRightOf="@id/img_on"
+		    />
+		
+		<ImageButton 
 		    android:id="@+id/img_off"
 		    android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="#"
-	        android:layout_toRightOf="@id/img_on"
+	        android:layout_toRightOf="@id/img_add"
 	        android:src="@drawable/hangup"
 	        android:layout_columnSpan="2"
 	        android:layout_gravity="right"
 		    />
     </GridLayout>
-    "
 
 </LinearLayout>

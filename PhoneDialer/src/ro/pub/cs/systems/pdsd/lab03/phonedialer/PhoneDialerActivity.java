@@ -1,9 +1,12 @@
 package ro.pub.cs.systems.pdsd.lab03.phonedialer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,8 @@ import android.widget.Toast;
 
 public class PhoneDialerActivity extends Activity {
 
+	final private static int CONTACTS_MANAGER_REQUEST_CODE = 2015;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +90,40 @@ public class PhoneDialerActivity extends Activity {
         button_back.setOnClickListener(new MyLisener('<'));
         button_on.setOnClickListener(new MyLisener('a'));
         button_off.setOnClickListener(new MyLisener('c'));
+        
+        ImageButton addButton = (ImageButton) findViewById(R.id.img_add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				TelephonyManager telemamanger = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+			    String phoneNumber = telemamanger.getSimSerialNumber(); 
+				
+				if (phoneNumber.length() > 0) {
+				  Intent intent = new Intent("ro.pub.cs.systems.pdsd.lab04.contactsmanager.intent.action.ContactsManagerActivity");
+				  intent.putExtra("ro.pub.cs.systems.pdsd.lab04.contactsmanager.PHONE_NUMBER_KEY", phoneNumber);
+				  startActivityForResult(intent, CONTACTS_MANAGER_REQUEST_CODE);
+				} else {
+				  Toast.makeText(getApplication(), "Phone number null", Toast.LENGTH_LONG).show();
+				}
+			}
+		});
     }
 
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	  switch(requestCode) {
+	    case CONTACTS_MANAGER_REQUEST_CODE:
+	      if (resultCode == Activity.RESULT_OK) {
+	        Bundle data = intent.getExtras();
+	        // process information from data ...
+	      }
+	      break;
+	 
+	      // process other request codes
+	  }
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

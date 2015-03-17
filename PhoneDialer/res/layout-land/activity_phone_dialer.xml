@@ -138,6 +138,13 @@
 	        android:text="0"
 		    />
 		
+		<ImageButton 
+		    android:id="@+id/img_add"
+		    android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/add"
+			android:layout_toRightOf="@id/img_on"
+		    />
 		
     </GridLayout>
     
